@@ -18,7 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->string('author');
             $table->date('publication_date');
-            $table->boolean('status')->default(1)->comment('0 Inactive 1 Active');
+            $table->boolean('status')->default(1)->comment('0 Inactive 1 Active 2 borrowed');
             $table->foreignId('category_id')->index()->constrained('categories')
             ->onDelete('cascade')
             ->onUpdate('cascade');

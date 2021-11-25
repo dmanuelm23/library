@@ -4,8 +4,7 @@
             <div class="row">
                 <div class="col-12">
                     <ul class="breadcrumbs">
-                        <li><a href="/home">Inicio</a></li>
-                        <li><a href="#">Catalogs</a></li>
+                        <li><a href="/home">Home</a></li>
                         <li>Categories</li>
                     </ul>
                 </div>
@@ -13,9 +12,6 @@
             <div class="row mb-30">
                 <div class="col-12 col-sm-6 col-md-8 col-lg-6">
                     <h1>Categories</h1>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-6 text-right">
-                    <a href="#" class="button secondary"> <i class="ri-arrow-left-s-line"></i> Regresar a catálogos</a>
                 </div>
             </div>
             <div class="row">
@@ -100,13 +96,6 @@
                             </div>
                         </div>
                         <div class="col-12 mb-15 mt-30">
-                            <div class="alert alert-success alert-dismissible inline-b" role="alert" id="alert">
-                                {{title_message}}
-                                <a data-scroll href="#ancla-list"  @click.prevent="stopTime()" class="inherit underline">Tienes {{IDLE_TIMEOUT - idleSecondsCounter}}s para deshacer esta acción.</a>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
                             <div class="alert alert-success alert-dismissible inline-b" role="alert" id="alertCreate">
                                 {{title_message_create}}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -119,7 +108,7 @@
                     <div class="row" v-if="counter == 0">
                         <div class="col-6 col-md-4 col-lg-3 ">
                             <div class="caja xs empty">
-                                <h4>Aún no tienes registros en este catálogo</h4>
+                                <h4>You do not have records in this catalog yet</h4>
                             </div>
                         </div>
                     </div>
@@ -256,7 +245,7 @@
                             </div>
                             <div class="col-12 col-md-12">
                                 <div class="form-group" :class="{'error':invalid.description}">
-                                    <label for="description">Description:*</label>
+                                    <label for="description">Description:</label>
                                     <div class="form-group" >
                                         <input
                                             type="text"
@@ -308,8 +297,8 @@
 								</div>
 							</div>
 							<div class="col-12 text-right">
-								<button type="button" class="button secondary mr-15" @click.prevent="clearFilter">Borrar todo</button>
-								<button type="submit" class="button main" @click.prevent="filter">Listo</button>
+								<button type="button" class="button secondary mr-15" @click.prevent="clearFilter">Clean up</button>
+								<button type="submit" class="button main" @click.prevent="filter">Ready</button>
 							</div>
 						</div>	
 					</form>
