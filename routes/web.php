@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('categories', CategoryController::class)->only(['index', 'store','update','destroy'])->names('categories');
+Route::post('list-category-filter', [CategoryController::class, 'listCategoryFilter'])->name('list-category-filter');
+Route::post('banned-category/{id}', [CategoryController::class, 'banned'])->name('banned-category');
