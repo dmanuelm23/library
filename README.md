@@ -1,5 +1,7 @@
 # Laravel Library
 
+This project was created with PHP version 7.4.15, with Laravel Framework Version 8.65 and MySQL database engine 5.7.24
+
 ## How to use
 
 - Clone the repository with __git clone__
