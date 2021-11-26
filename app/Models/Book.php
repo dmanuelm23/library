@@ -39,10 +39,24 @@ class Book extends Model
 
     protected $hidden =['created_at', 'updates_at'];
 
+    /**
+    * Relationship: One category can have many books assigned
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @created 25/11/2021
+    * @params 
+    * @return  \Illuminate\Database\Eloquent\Relations\hasToMany
+    */
     public function categories(){
         return $this->hasToMany(Category::class);
     }
 
+    /**
+    * Relationship: Many to Many Books and Users
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @created 25/11/2021
+    * @params 
+    * @return  \Illuminate\Database\Eloquent\Relations\belongsToMany
+    */
     public function booksUsers(){
         return $this->belongsToMany(User::class,'loan_books','book_id','user_id');
     }

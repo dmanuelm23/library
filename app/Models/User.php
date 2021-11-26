@@ -42,6 +42,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+    * Relationship: Many to Many Books and Users
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @created 25/11/2021
+    * @params 
+    * @return  \Illuminate\Database\Eloquent\Relations\belongsToMany
+    */
     public function usersBooks(){
         return $this->belongsToMany(Book::class,'loan_books','user_id','book_id');
     }

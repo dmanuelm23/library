@@ -88,8 +88,9 @@
                                             @click="validateAlerts(4)"
                                             v-model="dataBook.category_id"
                                             :options="categories"
+											:class="{'form-alert':invalid.category_id}"
                                         />
-                                        <p class="message" v-for="(e_publication_date, index) in errors.publication_date" :key="index">{{e_publication_date}}</p>
+                                        <p class="message" v-for="(e_category_id, index) in errors.category_id" :key="index">{{e_category_id}}</p>
                                     </div>
                                 </div>
                                 <div class="col-12 text-right">
@@ -151,7 +152,7 @@
                             <div class="caja xs" :class="{'gris':book.status === 0, 'verde':book.id === cardGreen}">
                                 <h4 class="text-and-circle-button">{{book.name}}</h4> 
                                 <button v-if="book.status >= 1" class="button-circle hover red align-top float-right" @click="openModalDestroy(book)"><i class="ri-delete-bin-line"></i></button>
-								<button v-if="book.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Book block'><i class="ri-delete-bin-line"></i></button>                                
+								<button v-if="book.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Book block'><i class="ri-delete-bin-line"></i></button>
                                 <div class="small">Author</div>
                                 <p>{{book.author}}</p>
                                 <div class="small">Publication date</div>
@@ -172,7 +173,6 @@
                                     </button>
 									<button v-if="book.status === 1" class="button-circle main mr-7" @click="openModalBorrow(book)" title='Book available'><i class="ri-contacts-book-2-line"></i></button>
 									<button v-if="book.status === 2" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Book not available'><i class="ri-contacts-book-2-line"></i></button>
-
 									<button v-if="book.status === 2" class="button-circle main mr-7" @click="openModalReturnBook(book)" title='Return book'><i class="ri-contacts-book-upload-line"></i></button>
                                 </div>
                             </div>
@@ -201,11 +201,16 @@
                                                 <p>{{book.category_name}}</p>
                                             </td>
                                             <td class="text-right">
-                                                <button class="button-circle main mr-7" @click="openModalEdit(book)"><i class="ri-pencil-fill"></i></button>
+												<button v-if="book.status >= 1" class="button-circle main mr-7" @click="openModalEdit(book)"><i class="ri-pencil-fill"></i></button>
+												<button v-if="book.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Book block'><i class="ri-pencil-fill"></i></button>
                                                 <button class="button-circle hover mr-7" @click.prevent="openModalBanned(book)">
                                                     <i :class="book.status=== 0  ? 'ri-lock-line' : 'ri-lock-unlock-line'"></i>
-                                                </button>
-                                                <button class="button-circle red align-top mb-0" @click="openModalDestroy(book)"><i class="ri-delete-bin-line"></i></button>
+                                                </button>												
+												<button v-if="book.status >= 1" class="button-circle red align-top mb-0" @click="openModalDestroy(book)"><i class="ri-delete-bin-line"></i></button>
+												<button v-if="book.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Book block'><i class="ri-delete-bin-line"></i></button>
+												<button v-if="book.status === 1" class="button-circle main mr-7" @click="openModalBorrow(book)" title='Book available'><i class="ri-contacts-book-2-line"></i></button>
+												<button v-if="book.status === 2" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Book not available'><i class="ri-contacts-book-2-line"></i></button>
+												<button v-if="book.status === 2" class="button-circle main mr-7" @click="openModalReturnBook(book)" title='Return book'><i class="ri-contacts-book-upload-line"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -346,7 +351,7 @@
                                         v-model="dataBook.category_id"
                                         :options="categories"
                                     />
-                                    <p class="message" v-for="(e_publication_date, index) in errors.publication_date" :key="index">{{e_publication_date}}</p>
+                                    <p class="message" v-for="(e_category_id, index) in errors.category_id" :key="index">{{e_category_id}}</p>
                                 </div>
                             </div>
 							<div class="col-12 mt-15" :class="{'text-right':createOrEdit=='save'}">
@@ -744,6 +749,7 @@ export default {
 				this.createOrEdit= 'edit';
                 this.resetErrorMessages();
                 this.dataBook= {
+					id: data.id,
                     name: data.name,
                     author: data.author,
                     publication_date: ref(new Date(data.publication_date.replace(/-/g, '\/'))),

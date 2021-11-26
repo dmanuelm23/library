@@ -4,36 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryPost;
+use App\Http\Requests\UpdateCategoryPut;
 
 class CategoryController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    * Function make a contruct
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @created 25/11/2021
+    * @param 
+    * @return void
+    */
     public function __construct()
     {
         $this->middleware('auth');
     }
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   /**
+    * Function to display view index.
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @created 25/11/2021
+    * @param 
+    * @return \Illuminate\View\View
+    */
     public function index()
     {
         return view('categories.index');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Function create new resource in storage.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param StoreCategoryPost $request
+     * @return \Illuminate\Http\JsonResponse
+     * 
      */
-    public function store(Request $request)
+    public function store(StoreCategoryPost $request)
     {
         $category = new Category;
         $category->name = $request->name;
@@ -49,13 +57,14 @@ class CategoryController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Function update the specified resource in storage.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param UpdateCategoryPut $request $id
+     * @return \Illuminate\Http\JsonResponse
+     * 
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryPut $request, $id)
     {
         $category = Category::findOrFail($id);
         $category->name = $request->name;
@@ -67,12 +76,12 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    /**  Remove the specified resource from storage.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param  $id
+     * @return \Illuminate\Http\JsonResponse
+    */
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
@@ -83,6 +92,13 @@ class CategoryController extends Controller
         ]); 
     }
 
+    /**
+     * Function to Display a listing of the resource.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function listCategoryFilter(Request $request)
     {
         $name = $request->name;
@@ -117,6 +133,12 @@ class CategoryController extends Controller
         
     }
 
+    /** Function change the status Active o Inactive
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function banned($id)
     {
         $category = Category::findOrFail($id);

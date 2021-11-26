@@ -117,12 +117,16 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-30" v-for="category in categories" :key="category.id">
                             <div class="caja xs" :class="{'gris':category.status === 0, 'verde':category.id === cardGreen}">
                                 <h4 class="text-and-circle-button">{{category.name}}</h4> 
-                                <button class="button-circle hover red align-top float-right" @click="openModalDestroy(category)"><i class="ri-delete-bin-line"></i></button>
+                                
+								<button v-if="category.status === 1" class="button-circle hover red align-top float-right" @click="openModalDestroy(category)"><i class="ri-delete-bin-line"></i></button>
+								<button v-if="category.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Category block'><i class="ri-delete-bin-line"></i></button>
                                 <div class="small">Description</div>
                                 <p>{{category.description}}</p>
                                 <div class="text-right">
-                                    <button class="button-circle main mr-7" @click="openModalEdit(category)"><i class="ri-pencil-fill"></i></button>
-                                    <button class="button-circle hover mr-7" @click.prevent="openModalBanned(category)">
+                                    <button v-if="category.status === 1" class="button-circle main mr-7" @click="openModalEdit(category)"><i class="ri-pencil-fill"></i></button>
+									<button v-if="category.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Category block'><i class="ri-pencil-fill"></i></button>
+                                    
+									<button class="button-circle hover mr-7" @click.prevent="openModalBanned(category)">
                                         <i :class="category.status=== 0  ? 'ri-lock-line' : 'ri-lock-unlock-line'"></i>
                                     </button>
                                 </div>
@@ -144,11 +148,13 @@
                                                 <p>{{category.description}}</p>
                                             </td>
                                             <td class="text-right">
-                                                <button class="button-circle main mr-7" @click="openModalEdit(category)"><i class="ri-pencil-fill"></i></button>
+                                                <button v-if="category.status === 1" class="button-circle main mr-7" @click="openModalEdit(category)"><i class="ri-pencil-fill"></i></button>
+												<button v-if="category.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Category block'><i class="ri-pencil-fill"></i></button>
                                                 <button class="button-circle hover mr-7" @click.prevent="openModalBanned(category)">
                                                     <i :class="category.status=== 0  ? 'ri-lock-line' : 'ri-lock-unlock-line'"></i>
                                                 </button>
-                                                <button class="button-circle red align-top mb-0" @click="openModalDestroy(category)"><i class="ri-delete-bin-line"></i></button>
+                                                <button v-if="category.status === 1" class="button-circle red align-top mb-0" @click="openModalDestroy(category)"><i class="ri-delete-bin-line"></i></button>
+												<button v-if="category.status === 0" class="button-circle disabled" data-toggle="tooltip" data-placement="top" title='Category block'><i class="ri-delete-bin-line"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -484,6 +490,7 @@ export default {
 				this.createOrEdit= 'edit';
                 this.resetErrorMessages();
                 this.dataCategory= {
+					id: data.id,
                     name: data.name,
                     description: data.description,
                     status:data.status,

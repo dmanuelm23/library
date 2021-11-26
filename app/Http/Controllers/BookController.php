@@ -6,37 +6,44 @@ use App\Models\Book;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreBookPost;
+use App\Http\Requests\UpdateBookPut;
 
 class BookController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    * Function make a contruct
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @created 25/11/2021
+    * @param 
+    * @return void
+    */
     public function __construct()
     {
         $this->middleware('auth');
     }
     
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Function to display view index.
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @created 25/11/2021
+    * @param 
+    * @return \Illuminate\View\View
+    */
     public function index()
     {
         return view('books.index');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Function create new resource in storage.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param StoreBookPost $request
+     * @return \Illuminate\Http\JsonResponse
+     * 
      */
-    public function store(Request $request)
+    public function store(StoreBookPost $request)
     {
         $book = new Book;
         $book->name = $request->name;
@@ -53,13 +60,14 @@ class BookController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Function update the specified resource in storage.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param UpdateBookPut $request $id
+     * @return \Illuminate\Http\JsonResponse
+     * 
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBookPut $request, $id)
     {
         $book = Book::findOrFail($id);
         $book->name = $request->name;
@@ -73,12 +81,12 @@ class BookController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    /**  Remove the specified resource from storage.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param  $id
+     * @return \Illuminate\Http\JsonResponse
+    */
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
@@ -89,6 +97,13 @@ class BookController extends Controller
         ]); 
     }
 
+    /**
+     * Function to Display a listing of the resource.
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function listBookFilter(Request $request)
     {
         $categories=Category::select(['id as id', 'name as text'])->where('status', 1)->get();
@@ -140,6 +155,12 @@ class BookController extends Controller
         
     }
 
+    /** Function change the status Active o Inactive
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function banned($id)
     {
         $book = Book::findOrFail($id);
@@ -147,6 +168,12 @@ class BookController extends Controller
         return response()->json('ok');
     }
 
+    /** Function change the status and add register in pivot table
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function borrow(Request $request)
     {
         $book = Book::findOrFail($request->book_id);
@@ -160,6 +187,12 @@ class BookController extends Controller
         ]); ;
     }
 
+    /** Function change the status and remove register in pivot table
+     * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+     * @created 25/11/2021
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function returnBook($id)
     {
         $book = Book::findOrFail($id);
