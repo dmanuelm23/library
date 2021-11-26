@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Book;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
@@ -16,7 +17,9 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'books' => Book::get()
+    ]);
 });
 
 Auth::routes();
