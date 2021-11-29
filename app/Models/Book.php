@@ -60,7 +60,12 @@ class Book extends Model
     public function booksUsers(){
         return $this->belongsToMany(User::class,'loan_books','book_id','user_id');
     }
-
+    
+    /**
+    * Toggles status
+    * @author Luis Daniel Manuel Martínez | luisdaniel_23@hotmail.com
+    * @create 25/11/2021
+    */
     public function toggleStatus()
     {
         $this->status = $this->status ? self::STATUS_INACTIVE : self::STATUS_ACTIVE;
